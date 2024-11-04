@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student List</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            color: #0077cc;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .search-container {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .search-container input[type="text"] {
+            width: 60%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+        }
+
+        .search-container select {
+            width: 35%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+        }
+
+        .search-container button {
+            padding: 10px 20px;
+            background-color: #0077cc;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-container button:hover {
+            background-color: #005b99;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            max-width: 600px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 100%;
+        }
+
+        li {
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 5px solid #0077cc;
+            transition: all 0.3s ease;
+        }
+
+        li:hover {
+            background-color: #e9f5fc;
+            border-left-color: #005b99;
+        }
+
+        .empty {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div>
+        <h1>Student List</h1>
+
+        <!-- Search and Filter Form -->
+        <div class="search-container">
+            <form method="GET" action="">
+                <input type="text" name="search" placeholder="Search by name" value="{{ request.GET.search }}">
+                <select name="branch">
+                    <option value="">All Branches</option>
+                    <option value="cse" {% if request.GET.branch == 'cse' %}selected{% endif %}>Computer Science and Engineering</option>
+                    <option value="ece" {% if request.GET.branch == 'ece' %}selected{% endif %}>Electronics and Communication Engineering</option>
+                    <option value="aids" {% if request.GET.branch == 'aids' %}selected{% endif %}>Artificial Intelligence & Data Science</option>
+                </select>
+                <select name="gender">
+                    <option value="">All Gender</option>
+                    <option value="male" {% if request.GET.branch == 'male' %}selected{% endif %}>Male</option>
+                    <option value="female" {% if request.GET.branch == 'female' %}selected{% endif %}>Female</option>
+<!--                    <option value="aids" {% if request.GET.branch == 'aids' %}selected{% endif %}>Artificial Intelligence & Data Science</option>-->
+                </select>
+                <button type="submit">Search</button>
+            </form>
+        </div>
+
+        <!-- Student List -->
+        <ul>
+            {% for student in students %}
+                <li>ID: {{ student.sid }}, Name: {{ student.name }}, Age: {{ student.age }}, Gender: {{ student.gender }}</li>
+            {% empty %}
+                <li class="empty">No students found.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
